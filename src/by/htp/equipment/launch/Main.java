@@ -7,6 +7,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		Management manag = new Management ();
 		manag.clientInit();
+		System.out.println("End");
 		
 		
 	}

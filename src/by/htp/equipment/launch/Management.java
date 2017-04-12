@@ -63,15 +63,12 @@ public class Management {
 		stock.setEquip(equip);
 		stock.setId(id);
 		stock.setNamber(namber);
-	}
-
-	public void clientInit() {
-		setCustomBase(new CustomerBase());
+		
+		customBase = new CustomerBase();
 		Client[] client = new Client[15];
-
-		client[0] = new Client();
-		client[0].setNameClient("Vasya");
-
+		customBase.setClient(client);
+		customBase.setAmount(0);
+		
 	}
 
 	public CustomerBase getCustomBase() {
@@ -88,5 +85,19 @@ public class Management {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
+	}
+
+	public void newClient() { 
+		Client[] client = customBase.getClient();
+		int amount = customBase.getAmount();
+		client[amount] = new Client();
+		client[amount].setNameClient("Vasya");
+		RentUnit rentUnit = new RentUnit();
+		Equipment[] equip = new Equipment[3];
+		Equipment[] equip2;
+		equip2 = stock.getEquip();
+		equip[0] = equip2[1];
+		equip[1] = equip2[4];
+		rentUnit.setUnits(equip);
 	}
 }

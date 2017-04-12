@@ -2,8 +2,11 @@ package by.htp.equipment.client;
 
 public class Client {
 	public String nameClient;
-	public RentUnit[] rentUnit;
+	public RentUnit rentUnit;
 
+	public Client(){
+		RentUnit rentUnit = new RentUnit();
+	}
 	public String getNameClient() {
 		return nameClient;
 	}
@@ -12,11 +15,11 @@ public class Client {
 		this.nameClient = nameClient;
 	}
 
-	public RentUnit[] getRentUnit() {
+	public RentUnit getRentUnit() {
 		return rentUnit;
 	}
 
-	public void setRentUnit(RentUnit[] rentUnit) {
+	public void setRentUnit(RentUnit rentUnit) {
 		this.rentUnit = rentUnit;
 	}
 

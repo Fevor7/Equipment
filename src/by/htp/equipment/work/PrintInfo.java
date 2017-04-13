@@ -34,7 +34,5 @@ public class PrintInfo {
 		}
 		OutInPut.printLine();
 	}
-	public static void printText(String text) {
-		System.out.println(text);
-	}
+	
 }

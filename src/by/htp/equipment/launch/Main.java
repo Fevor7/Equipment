@@ -1,6 +1,7 @@
 package by.htp.equipment.launch;
 
 import by.htp.equipment.work.Management;
+import by.htp.equipment.work.OutInPut;
 
 public class Main {
 	public static void main(String[] args) {
@@ -10,7 +11,6 @@ public class Main {
 		manag.printStock();
 		manag.printClient();
 		manag.printRentStat();
-
+		OutInPut.printGB();
 	}
-
 }

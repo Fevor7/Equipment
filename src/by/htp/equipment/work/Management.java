@@ -48,7 +48,8 @@ public class Management {
 	}
 
 	public void newClient() {
-		addClient("Vasya", 100007);
+		addClient("Vasya", 100007, 100004, 100002);
+		addClient("Petya", 100001);
 	}
 
 	private String timeStartRenting() {
@@ -117,76 +118,100 @@ public class Management {
 		rentStation.setUnits(eq2);
 		stock.setRentStation(rentStation);
 	}
-	private void addClient(String nameClient,  int id) {
-		int availId, availId2;
-		availId = findId(id);
-		if (availId > 0) {
-			String date1, date2;
-			Client[] client = customBase.getClient();
-			int amount = customBase.getAmount();
-			client[amount] = new Client();
-			client[amount].setNameClient(nameClient);
 
+	private void addClient(String nameClient, int id) {
+		int availId;
+		int amount = customBase.getAmount();
+		availId = findId(id);
+		if (availId >= 0) {
 			Equipment[] equip2;
 			equip2 = stock.getEquipment();
-
-			equip2[availId].setAvailabilityInStock(false);
-			equip2[availId].setNameOfTenant(nameClient);
-			date1 = timeStartRenting();
-			equip2[availId].setTimeStartRenting(date1);
-			date2 = timeStopRenting(date1);
-			equip2[availId].setTimeStopRenting(date2);
-
-			RentUnit rentUnit = new RentUnit();
+			equip2[availId] = newCl(equip2[availId], nameClient);
 			Equipment[] equip = new Equipment[3];
 			equip[0] = equip2[availId];
+			RentUnit rentUnit = new RentUnit();
 			rentUnit.setUnits(equip);
+			Client[] client = customBase.getClient();
+			client[amount] = new Client();
+			client[amount].setNameClient(nameClient);
 			client[amount].setRentUnit(rentUnit);
+			amount++;
+			customBase.setAmount(amount);
 			customBase.setClient(client);
 			createRentStation();
 		} else {
 			OutInPut.printText("Equipment not found!!!");
 		}
-
 	}
+
 	private void addClient(String nameClient, int id, int id2) {
 		int availId, availId2;
+		int amount = customBase.getAmount();
 		availId = findId(id);
 		availId2 = findId(id2);
-		if ((availId > 0) && (availId2 > 0)) {
-			String date1, date2;
-			Client[] client = customBase.getClient();
-			int amount = customBase.getAmount();
-			client[amount] = new Client();
-			client[amount].setNameClient(nameClient);
-
+		if ((availId >= 0) && (availId2 >= 0)) {
 			Equipment[] equip2;
 			equip2 = stock.getEquipment();
-
-			equip2[availId].setAvailabilityInStock(false);
-			equip2[availId].setNameOfTenant(nameClient);
-			date1 = timeStartRenting();
-			equip2[availId].setTimeStartRenting(date1);
-			date2 = timeStopRenting(date1);
-			equip2[availId].setTimeStopRenting(date2);
-
-			equip2[availId2].setAvailabilityInStock(false);
-			equip2[availId2].setNameOfTenant("Vasya");
-			equip2[availId2].setTimeStartRenting(date1);
-			equip2[availId2].setTimeStopRenting(date2);
-
-			RentUnit rentUnit = new RentUnit();
+			equip2[availId] = newCl(equip2[availId], nameClient);
+			equip2[availId2] = newCl(equip2[availId2], nameClient);
 			Equipment[] equip = new Equipment[3];
 			equip[0] = equip2[availId];
 			equip[1] = equip2[availId2];
+			RentUnit rentUnit = new RentUnit();
 			rentUnit.setUnits(equip);
+			Client[] client = customBase.getClient();
+			client[amount] = new Client();
+			client[amount].setNameClient(nameClient);
 			client[amount].setRentUnit(rentUnit);
+			amount++;
+			customBase.setAmount(amount);
 			customBase.setClient(client);
 			createRentStation();
 		} else {
 			OutInPut.printText("Equipment not found!!!");
 		}
+	}
 
+	private void addClient(String nameClient, int id, int id2, int id3) {
+		int availId, availId2, availId3;
+		int amount = customBase.getAmount();
+		availId = findId(id);
+		availId2 = findId(id2);
+		availId3 = findId(id3);
+		if ((availId >= 0) && (availId2 >= 0) && (availId3 >= 0)) {
+			Equipment[] equip2;
+			equip2 = stock.getEquipment();
+			equip2[availId] = newCl(equip2[availId], nameClient);
+			equip2[availId2] = newCl(equip2[availId2], nameClient);
+			equip2[availId3] = newCl(equip2[availId3], nameClient);
+			Equipment[] equip = new Equipment[3];
+			equip[0] = equip2[availId];
+			equip[1] = equip2[availId2];
+			equip[2] = equip2[availId3];
+			RentUnit rentUnit = new RentUnit();
+			rentUnit.setUnits(equip);
+			Client[] client = customBase.getClient();
+			client[amount] = new Client();
+			client[amount].setNameClient(nameClient);
+			client[amount].setRentUnit(rentUnit);
+			amount++;
+			customBase.setAmount(amount);
+			customBase.setClient(client);
+			createRentStation();
+		} else {
+			OutInPut.printText("Equipment not found!!!");
+		}
+	}
+
+	private Equipment newCl(Equipment equipment, String nameClient) {
+		String date1, date2;
+		equipment.setAvailabilityInStock(false);
+		equipment.setNameOfTenant(nameClient);
+		date1 = timeStartRenting();
+		equipment.setTimeStartRenting(date1);
+		date2 = timeStopRenting(date1);
+		equipment.setTimeStopRenting(date2);
+		return equipment;
 	}
 
 	private int findId(int id) {
@@ -215,5 +240,6 @@ public class Management {
 
 	public void printStock() {
 		PrintInfo.printStock(stock);
+
 	}
 }

@@ -11,6 +11,8 @@ public class Main {
 		manag.printStock();
 		manag.printClient();
 		manag.printRentStat();
+		manag.findTitleEq("Scooter");
+		manag.findWeightEq(2.1);
 		OutInPut.printGB();
 	}
 }

@@ -19,14 +19,14 @@ public class Management {
 		Client[] client = new Client[15];
 		customBase.setClient(client);
 
-		newEquipment(equip, "Bike", "LTD Rocco 60 Hydraulic Disk");
-		newEquipment(equip, "Bike", "Stels Navigator 500 MD");
-		newEquipment(equip, "Castle", "Vinca Sport черный 101.715");
-		newEquipment(equip, "Castle", "Longus 10/650 3550014");
-		newEquipment(equip, "Pump", "Sahoo 31074");
-		newEquipment(equip, "Pump", "Bicycle Gear BG-72627");
-		newEquipment(equip, "Scooter", "Hors 052");
-		newEquipment(equip, "Scooter", "M1NSK D4 50");
+		newEquipment(equip, "Bike", "LTD Rocco 60 Hydraulic Disk",10.5);
+		newEquipment(equip, "Bike", "Stels Navigator 500 MD",11.2);
+		newEquipment(equip, "Castle", "Vinca Sport черный 101.715",0.9);
+		newEquipment(equip, "Castle", "Longus 10/650 3550014",0.87);
+		newEquipment(equip, "Pump", "Sahoo 31074",0.57);
+		newEquipment(equip, "Pump", "Bicycle Gear BG-72627",0.77);
+		newEquipment(equip, "Scooter", "Hors 052",117.2);
+		newEquipment(equip, "Scooter", "M1NSK D4 50",121.3);
 
 		createRentStation();
 	}
@@ -70,7 +70,7 @@ public class Management {
 		return h1;
 	}
 
-	private void newEquipment(Equipment[] equip, String title, String type) {
+	private void newEquipment(Equipment[] equip, String title, String type, double weight) {
 		int namber = stock.getNamber();
 		int id = stock.getId();
 		switch (title) {
@@ -93,6 +93,7 @@ public class Management {
 		}
 		equip[namber].setId(id);
 		equip[namber].setType(type);
+		equip[namber].setWeight(weight);
 		id++;
 		namber++;
 		stock.setEquipment(equip);
@@ -229,16 +230,49 @@ public class Management {
 		}
 		return avId;
 	}
+	public void findTitleEq(String nameEquip){
+		int i = 0;
+		Equipment[] equip = stock.getEquipment();
+		OutInPut.printText("SEARCH ON REQUEST - "+nameEquip+":");
+		for (Equipment equipment: equip){
+			if ((equipment!=null)&&(equipment.getTitle()==nameEquip)) {
+				OutInPut.printEquipment(equipment);
+				i++;
+			}
+		}
+		if (i==0) {
+			OutInPut.printText("NOTHING FOUND");
+		}
+		OutInPut.printLine();
+	}
+	public void findWeightEq(double weight){
+		int i = 0;
+		OutInPut.printText("EQUIPMENT, WHOSE WEIGHT IS LESS THAN "+weight+" KILOGRAMS:");
+		Equipment[] equip = stock.getEquipment();
+		for (Equipment equipment: equip){
+			if ((equipment!=null)&&(equipment.getWeight()<weight)) {
+				OutInPut.printEquipment2(equipment);
+				i++;
+			}
+		}
+		if (i==0){
+			OutInPut.printText("NOTHING FOUND");
+		}
+		OutInPut.printLine();
+	}
 
 	public void printClient() {
+		OutInPut.printText("CUSTOMERS:");
 		PrintInfo.printClient(customBase);
 	}
 
 	public void printRentStat() {
+		OutInPut.printText("FREE EQUIPMENT:");
 		PrintInfo.printRentStat(stock);
 	}
 
 	public void printStock() {
+		OutInPut.printText("ALL EQUIPMENT IN STOCK:");
 		PrintInfo.printStock(stock);
 
 	}

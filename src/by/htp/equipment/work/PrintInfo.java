@@ -15,16 +15,18 @@ public class PrintInfo {
 		}
 		OutInPut.printLine();
 	}
-	public static void printRentStat(Stock stock){
+
+	public static void printRentStat(Stock stock) {
 		RentStation rentStation = stock.getRentStation();
 		Equipment[] equip = rentStation.getUnits();
-		for (Equipment equipment: equip){
-			if(equipment!=null) {
+		for (Equipment equipment : equip) {
+			if (equipment != null) {
 				OutInPut.printEquipment(equipment);
 			}
 		}
 		OutInPut.printLine();
 	}
+
 	public static void printStock(Stock stock) {
 		Equipment[] equipment = stock.getEquipment();
 		for (Equipment equi : equipment) {
@@ -34,5 +36,5 @@ public class PrintInfo {
 		}
 		OutInPut.printLine();
 	}
-	
+
 }

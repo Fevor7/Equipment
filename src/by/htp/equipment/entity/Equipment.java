@@ -9,6 +9,7 @@ public abstract class Equipment {
 	private String timeStartRenting;
 	private String timeStopRenting;
 	private String type;
+	private double weight;
 
 	public String getTitle() {
 		return title;
@@ -64,6 +65,14 @@ public abstract class Equipment {
 
 	public void setAvailabilityInStock(boolean availabilityInStock) {
 		this.availabilityInStock = availabilityInStock;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 
 }

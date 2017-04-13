@@ -14,65 +14,21 @@ public class Management {
 
 	public Management() {
 		stock = new Stock();
-		int id;
-		int namber;
 		Equipment[] equip = new Equipment[15];
-		namber = stock.getNamber();
-		id = stock.getId();
-		equip[namber] = new Bike();
-		equip[namber].setId(id);
-		equip[namber].setType("LTD Rocco 60 Hydraulic Disk");
-		id++;
-		namber++;
-		equip[namber] = new Bike();
-		equip[namber].setId(id);
-		id++;
-		equip[namber].setType("Stels Navigator 500 MD");
-		namber++;
-
-		equip[namber] = new Castle();
-		equip[namber].setId(id);
-		id++;
-		equip[namber].setType("Vinca Sport черный 101.715");
-		namber++;
-		equip[namber] = new Castle();
-		equip[namber].setId(id);
-		id++;
-		equip[namber].setType("Longus 10/650 3550014");
-		namber++;
-
-		equip[namber] = new Pump();
-		equip[namber].setId(id);
-		id++;
-		equip[namber].setType("Sahoo 31074 ");
-		namber++;
-		equip[namber] = new Pump();
-		equip[namber].setId(id);
-		id++;
-		equip[namber].setType("Bicycle Gear BG-72627");
-		namber++;
-
-		equip[namber] = new Scooter();
-		equip[namber].setId(id);
-		id++;
-		equip[namber].setType("Hors 052");
-		namber++;
-
-		equip[namber] = new Scooter();
-		equip[namber].setId(id);
-		id++;
-		equip[namber].setType("M1NSK D4 50");
-		namber++;
-
-		stock.setEquip(equip);
-		stock.setId(id);
-		stock.setNamber(namber);
-
 		customBase = new CustomerBase();
 		Client[] client = new Client[15];
 		customBase.setClient(client);
-		customBase.setAmount(0);
 
+		newEquipment(equip, "Bike", "LTD Rocco 60 Hydraulic Disk");
+		newEquipment(equip, "Bike", "Stels Navigator 500 MD");
+		newEquipment(equip, "Castle", "Vinca Sport черный 101.715");
+		newEquipment(equip, "Castle", "Longus 10/650 3550014");
+		newEquipment(equip, "Pump", "Sahoo 31074");
+		newEquipment(equip, "Pump", "Bicycle Gear BG-72627");
+		newEquipment(equip, "Scooter", "Hors 052");
+		newEquipment(equip, "Scooter", "M1NSK D4 50");
+
+		createRentStation();
 	}
 
 	public CustomerBase getCustomBase() {
@@ -92,39 +48,7 @@ public class Management {
 	}
 
 	public void newClient() {
-		String date1, date2;
-		Client[] client = customBase.getClient();
-		int amount = customBase.getAmount();
-		client[amount] = new Client();
-		client[amount].setNameClient("Vasya");
-
-		Equipment[] equip2;
-		equip2 = stock.getEquip();
-		equip2[1].setAvailabilityInStock(false);
-		equip2[1].setNameOfTenant("Vasya");
-		date1 = timeStartRenting();
-		equip2[1].setTimeStartRenting(date1);
-		date2 = timeStopRenting();
-		System.out.println(date2);
-		equip2[4].setAvailabilityInStock(false);
-		equip2[4].setNameOfTenant("Vasya");
-		equip2[4].setTimeStartRenting(date1);
-
-		RentUnit rentUnit = new RentUnit();
-		Equipment[] equip = new Equipment[3];
-		equip[0] = equip2[1];
-		equip[1] = equip2[4];
-		rentUnit.setUnits(equip);
-	}
-
-	public void printStock() {
-		Equipment[] equipment = stock.getEquip();
-		for (Equipment equi : equipment) {
-			if (equi != null) {
-				outInPut.printEquipment(equi);
-			}
-		}
-		outInPut.printLine();
+		addClient("Vasya", 100007);
 	}
 
 	private String timeStartRenting() {
@@ -132,18 +56,164 @@ public class Management {
 		return dateFormat.format(new Date());
 	}
 
-	private String timeStopRenting() {
-		String hour;
+	private String timeStopRenting(String startHour) {
+		String h1;
 		int h;
-		SimpleDateFormat dateFormat = new SimpleDateFormat("HH");
-		hour = dateFormat.format(new Date());
-		h = Integer.parseInt(hour) + 1;
-		hour = Integer.toString(h);
-		if (hour.length() == 1) {
-			hour = "0" + hour;
+		h1 = startHour.substring(0, 2);
+		h = Integer.parseInt(h1) + 1;
+		h1 = Integer.toString(h);
+		if (h1.length() == 1) {
+			h1 = "0" + h1;
 		}
-		SimpleDateFormat dateFormat2 = new SimpleDateFormat(":mm:ss");
-		hour = hour + dateFormat2.format(new Date());
-		return hour;
+		h1 = h1 + startHour.substring(2, 8);
+		return h1;
+	}
+
+	private void newEquipment(Equipment[] equip, String title, String type) {
+		int namber = stock.getNamber();
+		int id = stock.getId();
+		switch (title) {
+		case "Bike": {
+			equip[namber] = new Bike();
+			break;
+		}
+		case "Castle": {
+			equip[namber] = new Castle();
+			break;
+		}
+		case "Pump": {
+			equip[namber] = new Pump();
+			break;
+		}
+		case "Scooter": {
+			equip[namber] = new Scooter();
+			break;
+		}
+		}
+		equip[namber].setId(id);
+		equip[namber].setType(type);
+		id++;
+		namber++;
+		stock.setEquipment(equip);
+		stock.setId(id);
+		stock.setNamber(namber);
+	}
+
+	private void createRentStation() {
+		Equipment[] eq1 = stock.getEquipment();
+		boolean avInStock = true;
+		int length;
+		length = eq1.length;
+		Equipment[] eq2 = new Equipment[length];
+		for (int i = 0; i < length; i++) {
+			if (eq1[i] != null) {
+				avInStock = eq1[i].isAvailabilityInStock();
+				if (avInStock != false) {
+					eq2[i] = eq1[i];
+				}
+			}
+		}
+		RentStation rentStation = new RentStation();
+		rentStation.setUnits(eq2);
+		stock.setRentStation(rentStation);
+	}
+	private void addClient(String nameClient,  int id) {
+		int availId, availId2;
+		availId = findId(id);
+		if (availId > 0) {
+			String date1, date2;
+			Client[] client = customBase.getClient();
+			int amount = customBase.getAmount();
+			client[amount] = new Client();
+			client[amount].setNameClient(nameClient);
+
+			Equipment[] equip2;
+			equip2 = stock.getEquipment();
+
+			equip2[availId].setAvailabilityInStock(false);
+			equip2[availId].setNameOfTenant(nameClient);
+			date1 = timeStartRenting();
+			equip2[availId].setTimeStartRenting(date1);
+			date2 = timeStopRenting(date1);
+			equip2[availId].setTimeStopRenting(date2);
+
+			RentUnit rentUnit = new RentUnit();
+			Equipment[] equip = new Equipment[3];
+			equip[0] = equip2[availId];
+			rentUnit.setUnits(equip);
+			client[amount].setRentUnit(rentUnit);
+			customBase.setClient(client);
+			createRentStation();
+		} else {
+			OutInPut.printText("Equipment not found!!!");
+		}
+
+	}
+	private void addClient(String nameClient, int id, int id2) {
+		int availId, availId2;
+		availId = findId(id);
+		availId2 = findId(id2);
+		if ((availId > 0) && (availId2 > 0)) {
+			String date1, date2;
+			Client[] client = customBase.getClient();
+			int amount = customBase.getAmount();
+			client[amount] = new Client();
+			client[amount].setNameClient(nameClient);
+
+			Equipment[] equip2;
+			equip2 = stock.getEquipment();
+
+			equip2[availId].setAvailabilityInStock(false);
+			equip2[availId].setNameOfTenant(nameClient);
+			date1 = timeStartRenting();
+			equip2[availId].setTimeStartRenting(date1);
+			date2 = timeStopRenting(date1);
+			equip2[availId].setTimeStopRenting(date2);
+
+			equip2[availId2].setAvailabilityInStock(false);
+			equip2[availId2].setNameOfTenant("Vasya");
+			equip2[availId2].setTimeStartRenting(date1);
+			equip2[availId2].setTimeStopRenting(date2);
+
+			RentUnit rentUnit = new RentUnit();
+			Equipment[] equip = new Equipment[3];
+			equip[0] = equip2[availId];
+			equip[1] = equip2[availId2];
+			rentUnit.setUnits(equip);
+			client[amount].setRentUnit(rentUnit);
+			customBase.setClient(client);
+			createRentStation();
+		} else {
+			OutInPut.printText("Equipment not found!!!");
+		}
+
+	}
+
+	private int findId(int id) {
+		int avId = -5;
+		RentStation rentStation = stock.getRentStation();
+		Equipment[] equipment = rentStation.getUnits();
+		for (int i = 0; i < equipment.length; i++) {
+			if (equipment[i] != null) {
+
+				if (equipment[i].getId() == id) {
+					avId = i;
+					break;
+				}
+			}
+		}
+		return avId;
+	}
+
+	public void printClient() {
+		PrintInfo.printClient(customBase);
+	}
+
+	public void printRentStat() {
+		PrintInfo.printRentStat(stock);
+	}
+
+	public void printStock() {
+		PrintInfo.printStock(stock);
 	}
 }

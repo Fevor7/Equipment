@@ -3,7 +3,7 @@ package by.htp.equipment.client;
 import by.htp.equipment.entity.Equipment;
 
 public class RentUnit {
-	//снаряжение, которое пользователь взял в прокат
+	// снаряжение, которое пользователь взял в прокат
 	private Equipment[] units;
 
 	public Equipment[] getUnits() {

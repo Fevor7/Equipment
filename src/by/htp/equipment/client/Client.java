@@ -4,9 +4,6 @@ public class Client {
 	public String nameClient;
 	public RentUnit rentUnit;
 
-	public Client(){
-		RentUnit rentUnit = new RentUnit();
-	}
 	public String getNameClient() {
 		return nameClient;
 	}

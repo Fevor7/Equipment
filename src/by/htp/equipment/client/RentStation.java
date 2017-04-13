@@ -14,6 +14,5 @@ public class RentStation {
 		public void setUnits(Equipment[] units) {
 			this.units = units;
 		}
-		
 	}
 }

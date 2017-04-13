@@ -4,7 +4,7 @@ public abstract class Equipment {
 	// private Category category;
 	private String title;
 	private int id;
-	private boolean AvailabilityInStock; 
+	private boolean AvailabilityInStock = true; 
 	private String nameOfTenant;
 	private String timeStartRenting;
 	private String timeStopRenting;

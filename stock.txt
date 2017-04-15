@@ -1,0 +1,8 @@
+100001, Bike, LTD Rocco 60 Hydraulic Disk, 10.5, true, aluminum
+100002, Bike, Stels Navigator 500 MD, 11.2, true, steel
+100003, Castle, Vinca Sport black 101.715, 0.9, true
+100004, Castle, Longus 10/650 3550014, 0.87, true
+100005, Pump, Sahoo 31074, 0.57, true
+100006, Pump, Bicycle Gear BG-72627, 0.77, true
+100007, Scooter, Hors 052, 117.2, true, 500cc
+100008, Scooter, M1NSK D4 50, 121.3, true, 400cc

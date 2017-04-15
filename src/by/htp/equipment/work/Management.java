@@ -7,28 +7,14 @@ import java.util.Date;
 
 import by.htp.equipment.array.*;
 import by.htp.equipment.client.*;
+import by.htp.equipment.work.WorkWithFiles;
 
 public class Management {
 	private Stock stock;
 	private CustomerBase customBase;
 
 	public Management() {
-		stock = new Stock();
-		Equipment[] equip = new Equipment[15];
-		customBase = new CustomerBase();
-		Client[] client = new Client[15];
-		customBase.setClient(client);
-
-		newEquipment(equip, "Bike", "LTD Rocco 60 Hydraulic Disk",10.5);
-		newEquipment(equip, "Bike", "Stels Navigator 500 MD",11.2);
-		newEquipment(equip, "Castle", "Vinca Sport черный 101.715",0.9);
-		newEquipment(equip, "Castle", "Longus 10/650 3550014",0.87);
-		newEquipment(equip, "Pump", "Sahoo 31074",0.57);
-		newEquipment(equip, "Pump", "Bicycle Gear BG-72627",0.77);
-		newEquipment(equip, "Scooter", "Hors 052",117.2);
-		newEquipment(equip, "Scooter", "M1NSK D4 50",121.3);
-
-		createRentStation();
+		initializationEquip();
 	}
 
 	public CustomerBase getCustomBase() {
@@ -70,7 +56,52 @@ public class Management {
 		return h1;
 	}
 
-	private void newEquipment(Equipment[] equip, String title, String type, double weight) {
+	private Equipment[] newEquipment(Equipment[] equip, String title, String type, double weight,
+			String additionalParam) {
+		String line = "";
+		String lineForFile;
+		int namber = stock.getNamber();
+		int id = stock.getId();
+		switch (title) {
+		case "Bike": {
+			equip[namber] = new Bike();
+			Bike bike = (Bike) equip[namber];
+			bike.setFrameMaterial(additionalParam);
+			line = line + additionalParam;
+			break;
+		}
+		case "Castle": {
+			equip[namber] = new Castle();
+			break;
+		}
+		case "Pump": {
+			equip[namber] = new Pump();
+			break;
+		}
+		case "Scooter": {
+			equip[namber] = new Scooter();
+			Scooter scooter = (Scooter) equip[namber];
+			scooter.setEngineCapacity(additionalParam);
+			line = line + additionalParam;
+			break;
+		}
+		}
+		equip[namber].setId(id);
+		equip[namber].setType(type);
+		equip[namber].setWeight(weight);
+		lineForFile = Integer.toString(id) + ", " +equip[namber].getTitle()+", "+ type + ", " + Double.toString(weight) + ", " +equip[namber].isAvailabilityInStock()+ ", " + line;
+		id++;
+		namber++;
+
+		stock.setEquipment(equip);
+		stock.setId(id);
+		stock.setNamber(namber);
+		WorkWithFiles.writeToFile("stock.txt", lineForFile);
+		return equip;
+	}
+
+	private Equipment[] newEquipment(Equipment[] equip, String title, String type, double weight) {
+		String lineForFile;
 		int namber = stock.getNamber();
 		int id = stock.getId();
 		switch (title) {
@@ -94,11 +125,14 @@ public class Management {
 		equip[namber].setId(id);
 		equip[namber].setType(type);
 		equip[namber].setWeight(weight);
+		lineForFile = Integer.toString(id) + ", " +equip[namber].getTitle()+", "+ type + ", " + Double.toString(weight) + ", " +equip[namber].isAvailabilityInStock();
 		id++;
 		namber++;
 		stock.setEquipment(equip);
 		stock.setId(id);
 		stock.setNamber(namber);
+		WorkWithFiles.writeToFile("stock.txt", lineForFile);
+		return equip;
 	}
 
 	private void createRentStation() {
@@ -230,32 +264,34 @@ public class Management {
 		}
 		return avId;
 	}
-	public void findTitleEq(String nameEquip){
+
+	public void findTitleEq(String nameEquip) {
 		int i = 0;
 		Equipment[] equip = stock.getEquipment();
-		OutInPut.printText("SEARCH ON REQUEST - "+nameEquip+":");
-		for (Equipment equipment: equip){
-			if ((equipment!=null)&&(equipment.getTitle()==nameEquip)) {
+		OutInPut.printText("SEARCH ON REQUEST - " + nameEquip + ":");
+		for (Equipment equipment : equip) {
+			if ((equipment != null) && (equipment.getTitle() == nameEquip)) {
 				OutInPut.printEquipment(equipment);
 				i++;
 			}
 		}
-		if (i==0) {
+		if (i == 0) {
 			OutInPut.printText("NOTHING FOUND");
 		}
 		OutInPut.printLine();
 	}
-	public void findWeightEq(double weight){
+
+	public void findWeightEq(double weight) {
 		int i = 0;
-		OutInPut.printText("EQUIPMENT, WHOSE WEIGHT IS LESS THAN "+weight+" KILOGRAMS:");
+		OutInPut.printText("EQUIPMENT, WHOSE WEIGHT IS LESS THAN " + weight + " KILOGRAMS:");
 		Equipment[] equip = stock.getEquipment();
-		for (Equipment equipment: equip){
-			if ((equipment!=null)&&(equipment.getWeight()<weight)) {
+		for (Equipment equipment : equip) {
+			if ((equipment != null) && (equipment.getWeight() < weight)) {
 				OutInPut.printEquipment2(equipment);
 				i++;
 			}
 		}
-		if (i==0){
+		if (i == 0) {
 			OutInPut.printText("NOTHING FOUND");
 		}
 		OutInPut.printLine();
@@ -274,6 +310,26 @@ public class Management {
 	public void printStock() {
 		OutInPut.printText("ALL EQUIPMENT IN STOCK:");
 		PrintInfo.printStock(stock);
-
 	}
+
+	private void initializationEquip() {
+		stock = new Stock();
+		Equipment[] equip = new Equipment[15];
+		customBase = new CustomerBase();
+		Client[] client = new Client[15];
+		customBase.setClient(client);
+		WorkWithFiles.createFile("stock.txt");
+		equip = newEquipment(equip, "Bike", "LTD Rocco 60 Hydraulic Disk", 10.5, "aluminum");
+		equip = newEquipment(equip, "Bike", "Stels Navigator 500 MD", 11.2, "steel");
+		equip = newEquipment(equip, "Castle", "Vinca Sport black 101.715", 0.9);
+		equip = newEquipment(equip, "Castle", "Longus 10/650 3550014", 0.87);
+		equip = newEquipment(equip, "Pump", "Sahoo 31074", 0.57);
+		equip = newEquipment(equip, "Pump", "Bicycle Gear BG-72627", 0.77);
+		equip = newEquipment(equip, "Scooter", "Hors 052", 117.2, "500cc");
+		equip = newEquipment(equip, "Scooter", "M1NSK D4 50", 121.3, "400cc");
+		
+		stock = WorkWithFiles.readWithFile("stock.txt",stock);
+		createRentStation();
+	}
+	
 }

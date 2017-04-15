@@ -3,6 +3,7 @@ package by.htp.equipment.work;
 import by.htp.equipment.client.Client;
 import by.htp.equipment.client.RentUnit;
 import by.htp.equipment.entity.Equipment;
+import by.htp.equipment.entity.*;
 import java.util.Scanner;
 
 public class OutInPut {
@@ -12,12 +13,22 @@ public class OutInPut {
 		if (equi.isAvailabilityInStock() == false) {
 			System.out.print("; Customer name: " + equi.getNameOfTenant() + "; start time: "
 					+ equi.getTimeStartRenting() + "; stop time: " + equi.getTimeStopRenting());
+
+		}
+		if (equi.getTitle() == "Bike") {
+			Bike bike = (Bike) equi;
+			System.out.print("; Frame Material: " + bike.getFrameMaterial());
+		}
+		if (equi.getTitle() == "Scooter") {
+			Scooter scooter = (Scooter) equi;
+			System.out.print("; Engine capacity: " + scooter.getEngineCapacity());
 		}
 		System.out.println("");
 	}
+
 	public static void printEquipment2(Equipment equi) {
 		System.out.print(equi.getId() + " - " + equi.getTitle() + ": " + equi.getType() + "; Availability in stock: "
-				+ equi.isAvailabilityInStock()+"; Weight: "+equi.getWeight());
+				+ equi.isAvailabilityInStock() + "; Weight: " + equi.getWeight());
 		if (equi.isAvailabilityInStock() == false) {
 			System.out.print("; Customer name: " + equi.getNameOfTenant());
 		}

@@ -32,6 +32,7 @@ public class PrintInfo {
 		for (Equipment equi : equipment) {
 			if (equi != null) {
 				OutInPut.printEquipment(equi);
+				
 			}
 		}
 		OutInPut.printLine();

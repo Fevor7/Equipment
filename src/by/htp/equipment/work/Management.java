@@ -5,6 +5,8 @@ import by.htp.equipment.entity.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import by.htp.equipment.accessory.Castle;
+import by.htp.equipment.accessory.Pump;
 import by.htp.equipment.array.*;
 import by.htp.equipment.client.*;
 import by.htp.equipment.work.WorkWithFiles;

@@ -1,10 +1,14 @@
 package by.htp.equipment.work;
 
 import by.htp.equipment.work.OutInPut;
+//import java.util.Collection;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+
+import by.htp.equipment.accessory.Castle;
+import by.htp.equipment.accessory.Pump;
 import by.htp.equipment.array.Stock;
 import by.htp.equipment.entity.*;
 

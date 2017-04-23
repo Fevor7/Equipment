@@ -1,4 +1,4 @@
-package by.htp.equipment.entity;
+package by.htp.equipment.accessory;
 
 import by.htp.equipment.entity.Equipment;
 

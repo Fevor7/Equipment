@@ -98,7 +98,7 @@ public class Management {
 		stock.setEquipment(equip);
 		stock.setId(id);
 		stock.setNamber(namber);
-		WorkWithFiles.writeToFile("stock.txt", lineForFile);
+		//WorkWithFiles.writeToFile("stock.txt", lineForFile);
 		return equip;
 	}
 
@@ -133,7 +133,7 @@ public class Management {
 		stock.setEquipment(equip);
 		stock.setId(id);
 		stock.setNamber(namber);
-		WorkWithFiles.writeToFile("stock.txt", lineForFile);
+		//WorkWithFiles.writeToFile("stock.txt", lineForFile);
 		return equip;
 	}
 
@@ -320,7 +320,7 @@ public class Management {
 		customBase = new CustomerBase();
 		Client[] client = new Client[15];
 		customBase.setClient(client);
-		WorkWithFiles.createFile("stock.txt");
+		//WorkWithFiles.createFile("stock.txt");
 		equip = newEquipment(equip, "Bike", "LTD Rocco 60 Hydraulic Disk", 10.5, "aluminum");
 		equip = newEquipment(equip, "Bike", "Stels Navigator 500 MD", 11.2, "steel");
 		equip = newEquipment(equip, "Castle", "Vinca Sport black 101.715", 0.9);
@@ -330,7 +330,7 @@ public class Management {
 		equip = newEquipment(equip, "Scooter", "Hors 052", 117.2, "500cc");
 		equip = newEquipment(equip, "Scooter", "M1NSK D4 50", 121.3, "400cc");
 		
-		stock = WorkWithFiles.readWithFile("stock.txt",stock);
+		//stock = WorkWithFiles.readWithFile("stock.txt",stock);
 		createRentStation();
 	}
 	

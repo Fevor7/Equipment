@@ -19,5 +19,4 @@ public class Client {
 	public void setRentUnit(RentUnit rentUnit) {
 		this.rentUnit = rentUnit;
 	}
-
 }

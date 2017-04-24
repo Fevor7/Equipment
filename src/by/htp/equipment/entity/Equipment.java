@@ -1,5 +1,10 @@
 package by.htp.equipment.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import by.htp.equipment.accessory.Accessory;
+
 public abstract class Equipment {
 	// private Category category;
 	private String title;

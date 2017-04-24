@@ -1,5 +1,7 @@
 package by.htp.equipment.accessory;
 
-public class BagWithTools {
-
+public class BagWithTools extends ScooterAcces{
+	public BagWithTools() {
+		super.setTitle("BagWithTools");
+	}
 }

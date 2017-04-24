@@ -1,9 +1,12 @@
 package by.htp.equipment.work;
 
+import by.htp.equipment.accessory.*;
 import by.htp.equipment.client.Client;
 import by.htp.equipment.client.RentUnit;
 import by.htp.equipment.entity.Equipment;
 import by.htp.equipment.entity.*;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class OutInPut {
@@ -18,14 +21,38 @@ public class OutInPut {
 		if (equi.getTitle() == "Bike") {
 			Bike bike = (Bike) equi;
 			System.out.print("; Frame Material: " + bike.getFrameMaterial());
+			List<BicycleAcces> list2 = bike.getAccessor();
+			printBikeAcces(list2);
+			
 		}
 		if (equi.getTitle() == "Scooter") {
 			Scooter scooter = (Scooter) equi;
 			System.out.print("; Engine capacity: " + scooter.getEngineCapacity());
+			List<ScooterAcces> list2 = scooter.getAccessor();
+			printScootAcces(list2);
 		}
 		System.out.println("");
 	}
 
+	private static void printScootAcces(List<ScooterAcces> list){
+		if (list!=null){
+			System.out.println("");
+			for (int i =0; i<list.size(); i++){
+				ScooterAcces scoot = list.get(i);
+				System.out.println("                       Id: "+scoot.getId()+", title: "+scoot.getTitle()+",type: "+scoot.getType());
+			}
+		}
+	}
+	private static void printBikeAcces(List<BicycleAcces> list){
+		if (list!=null){
+			System.out.println("");
+			for (int i =0; i<list.size(); i++){
+				BicycleAcces bike = list.get(i);
+				System.out.println("                       Id: "+bike.getId()+", title: "+bike.getTitle()+",type: "+bike.getType());
+			}
+		}
+	}
+	
 	public static void printEquipment2(Equipment equi) {
 		System.out.print(equi.getId() + " - " + equi.getTitle() + ": " + equi.getType() + "; Availability in stock: "
 				+ equi.isAvailabilityInStock() + "; Weight: " + equi.getWeight());
@@ -43,11 +70,12 @@ public class OutInPut {
 	public static void printClient(Client client) {
 		System.out.print(client.getNameClient() + ": ");
 		RentUnit rentUnit = client.getRentUnit();
-		Equipment[] units = rentUnit.getUnits();
-		for (Equipment equipment : units) {
-			if (equipment != null) {
-				System.out.print(equipment.getId() + " ");
-			}
+		List<Equipment> equip = rentUnit.getUnits();
+		Equipment eq;
+		for(int i = 0; i< equip.size(); i++){
+			eq = equip.get(i);
+			printEquipment(eq);
+			//System.out.println("");
 		}
 		System.out.println("");
 	}
@@ -56,11 +84,6 @@ public class OutInPut {
 		System.out.println(text);
 	}
 
-	public static int scanMenu() {
-		Scanner sc = new Scanner(System.in);
-		int i = sc.nextInt();
-		return i;
-	}
 
 	public static void printGB() {
 		System.out.println("Good Bye!!!");

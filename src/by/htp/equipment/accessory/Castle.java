@@ -1,8 +1,6 @@
 package by.htp.equipment.accessory;
 
-import by.htp.equipment.entity.Equipment;
-
-public class Castle extends Equipment {
+public class Castle extends BicycleAcces {
 
 	public Castle() {
 		super.setTitle("Castle");
